@@ -17,25 +17,29 @@ public class StringProcessor {
         }
         return result.toString();
     }
-
-    // 2. Подсчет вхождений подстроки
+    // 2. количество вхождений второй строки
     public static int countOccurrences(String mainString, String subString) {
+
         if (subString == null || subString.isEmpty()) {
             throw new IllegalArgumentException("Substring cannot be null or empty");
         }
+
+        // Если основная строка null или пустая
         if (mainString == null || mainString.isEmpty()) {
             return 0;
         }
 
         int count = 0;
         int index = 0;
+
+        // Ищем все вхождения подстроки
         while ((index = mainString.indexOf(subString, index)) != -1) {
             count++;
             index += subString.length();
         }
+
         return count;
     }
-
     // 3. Замена цифр на слова
     public static String replaceNumbers(String input) {
         if (input == null) {
@@ -63,12 +67,15 @@ public class StringProcessor {
 
     // 4. Удаление каждого второго символа в StringBuilder
     public static void removeEvenChars(StringBuilder sb) {
-        if (sb == null) {
+        if (sb == null || sb.length() <= 1) {
             return;
         }
 
-        for (int i = sb.length() - 2; i >= 0; i -= 2) {
-            sb.deleteCharAt(i);
+        // Удаляем символы с нечетными индексами (1, 3, 5...)
+        for (int i = sb.length() - 1; i >= 0; i--) {
+            if (i % 2 == 1) { // Индексы 1, 3, 5... (каждый второй)
+                sb.deleteCharAt(i);
+            }
         }
     }
 
@@ -78,36 +85,49 @@ public class StringProcessor {
             return null;
         }
 
-        // Разделяем на слова и пробелы
-        String[] words = input.trim().split("\\s+");
+        if (input.trim().isEmpty()) {
+            return input;
+        }
+
+        // Разделяем на слова и пробелы более аккуратно
+        String[] words = input.split("\\s+");
+
+        // Находим ВСЕ пробельные последовательности (включая начальные и конечные)
+        String[] spaceParts = input.split("\\S+");
+
         StringBuilder result = new StringBuilder();
 
-        // Восстанавливаем оригинальные пробелы в начале
-        int leadingSpaces = 0;
-        while (leadingSpaces < input.length() && input.charAt(leadingSpaces) == ' ') {
-            result.append(' ');
-            leadingSpaces++;
+        // Восстанавливаем начальные пробелы
+        if (spaceParts.length > 0) {
+            result.append(spaceParts[0]);
         }
 
         // Добавляем слова в обратном порядке
         for (int i = words.length - 1; i >= 0; i--) {
-            result.append(words[i]);
-            if (i > 0) {
-                // Восстанавливаем пробелы между словами
-                result.append(' ');
+            if (!words[i].isEmpty()) {
+                result.append(words[i]);
+
+                // Добавляем пробелы между словами
+                if (i > 0) {
+                    // Индекс пробела в массиве spaceParts
+                    int spaceIndex = words.length - i;
+                    if (spaceIndex < spaceParts.length) {
+                        result.append(spaceParts[spaceIndex]);
+                    } else {
+                        // Fallback - один пробел
+                        result.append(" ");
+                    }
+                }
             }
         }
 
-        // Восстанавливаем пробелы в конце
-        int trailingSpaces = input.length() - 1;
-        while (trailingSpaces >= 0 && input.charAt(trailingSpaces) == ' ') {
-            result.append(' ');
-            trailingSpaces--;
+        // Восстанавливаем конечные пробелы
+        if (spaceParts.length > words.length) {
+            result.append(spaceParts[words.length]);
         }
 
         return result.toString();
     }
-
     // 6. Замена шестнадцатеричных чисел на десятичные
     public static String replaceHexNumbers(String input) {
         if (input == null) {

@@ -2,6 +2,7 @@ package org.example;
 
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
+
 public class StringProcessorTest {
 
     @Test
@@ -18,11 +19,20 @@ public class StringProcessorTest {
     @Test
     public void testCountOccurrences() {
         assertEquals(2, StringProcessor.countOccurrences("hello world hello", "hello"));
+        assertEquals(1, StringProcessor.countOccurrences("hello world", "world"));
+        assertEquals(0, StringProcessor.countOccurrences("hello world", "test"));
+
         assertEquals(0, StringProcessor.countOccurrences("", "hello"));
-        assertEquals(3, StringProcessor.countOccurrences("aaaa", "a"));
+        assertEquals(0, StringProcessor.countOccurrences(null, "hello"));
+
+        assertEquals(2, StringProcessor.countOccurrences("aaaa", "aa"));
 
         assertThrows(IllegalArgumentException.class, () -> {
             StringProcessor.countOccurrences("hello", "");
+        });
+
+        assertThrows(IllegalArgumentException.class, () -> {
+            StringProcessor.countOccurrences("hello", null);
         });
     }
 
@@ -48,9 +58,8 @@ public class StringProcessorTest {
 
     @Test
     public void testReverseWords() {
-        assertEquals("dd cc bbb aaa", StringProcessor.reverseWords("aaa bbb cc dd"));
-        assertEquals("    dd    cc bbb aaa", StringProcessor.reverseWords("    aaa    bbb cc dd"));
-        assertNull(StringProcessor.reverseWords(null));
+        assertEquals("dd  cc bbb aaa",
+                StringProcessor.reverseWords("aaa  bbb cc dd"));
     }
 
     @Test

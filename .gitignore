@@ -1,38 +1,60 @@
+# Maven
 target/
-!.mvn/wrapper/maven-wrapper.jar
-!**/src/main/**/target/
-!**/src/test/**/target/
+pom.xml.tag
+pom.xml.releaseBackup
+pom.xml.versionsBackup
+pom.xml.next
 
-### IntelliJ IDEA ###
-.idea/modules.xml
-.idea/jarRepositories.xml
-.idea/compiler.xml
-.idea/libraries/
+# IDEA
+.idea/
 *.iws
 *.iml
 *.ipr
+out/
 
-### Eclipse ###
-.apt_generated
-.classpath
+# Eclipse
+.settings/
+bin/
+.loadpath
 .factorypath
-.project
-.settings
-.springBeans
-.sts4-cache
 
-### NetBeans ###
+# NetBeans
 /nbproject/private/
 /nbbuild/
 /dist/
 /nbdist/
 /.nb-gradle/
+
+# Build outputs
 build/
-!**/src/main/**/build/
-!**/src/test/**/build/
+dist/
 
-### VS Code ###
-.vscode/
+# Logs
+*.log
+logs/
 
-### Mac OS ###
+# Unit test reports
+test-output/
+surefire-reports/
+failsafe-reports/
+
+# Temporary files
+*.tmp
+*.temp
+*.cache
+
+# OS
 .DS_Store
+Thumbs.db
+
+# Package Files
+*.jar
+*.war
+*.ear
+*.zip
+*.tar.gz
+*.rar
+
+# Virtual machine crash logs
+hs_err_pid*
+replay_pid*
